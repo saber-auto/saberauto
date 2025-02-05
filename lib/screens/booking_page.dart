@@ -45,16 +45,13 @@ class _BookingScreenState extends State<BookingScreen> {
     final user = supabase.auth.currentUser;
     if (user == null) return; // Ensure user is logged in
 
-    final bookingTime =
-        '${_selectedMonth!} ${_selectedDay!}, ${_selectedHour!}:00';
-
     // Check for existing bookings (1-hour gap)
     final existingBookings = await supabase
         .from('appointments')
         .select('id')
-        .eq('month', _selectedMonth)
-        .eq('day', _selectedDay)
-        .eq('hour', _selectedHour)
+        .eq('month', _selectedMonth as Object)
+        .eq('day', _selectedDay as Object)
+        .eq('hour', _selectedHour as Object)
         .execute();
 
     if (existingBookings.data.isNotEmpty) {
@@ -73,7 +70,7 @@ class _BookingScreenState extends State<BookingScreen> {
       'hour': _selectedHour,
       'name': _nameController.text,
       'car_matricule': _carMatriculeController.text,
-    }).execute();
+    })._execute();
 
     if (response.error != null) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -153,4 +150,12 @@ class _BookingScreenState extends State<BookingScreen> {
       ),
     );
   }
+}
+
+extension on PostgrestFilterBuilder {
+  _execute() {}
+}
+
+extension on PostgrestFilterBuilder<PostgrestList> {
+  execute() {}
 }
