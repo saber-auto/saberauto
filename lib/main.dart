@@ -1,8 +1,7 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'screens/home_screen.dart';
-import 'screens/login_screen.dart'; // Corrected import for the LoginScreen
-import 'dart:async';
+import 'screens/services_screen.dart'; // Corrected import for ServicesScreen
 
 void main() async {
   // Initialize Supabase with your URL and anonKey
@@ -41,31 +40,25 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    _navigateToNextScreen();
+    _navigateToServicesScreen();
   }
 
-  // Function to handle navigation based on auth state
-  _navigateToNextScreen() async {
+  // Function to navigate to Services screen directly
+  _navigateToServicesScreen() async {
     await Future.delayed(
         const Duration(seconds: 3)); // Show splash for 3 seconds
     final user = Supabase.instance.client.auth.currentUser;
 
-    if (user != null) {
-      // If the user is already logged in, navigate to the HomeScreen
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-            builder: (context) => const HomeScreen(
-                  selectedIndex: 1,
-                )),
-      );
-    } else {
-      // Otherwise, navigate to the LoginScreen
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => const LoginScreen()),
-      );
-    }
+    // Navigate to ServicesScreen directly, whether user is logged in or not
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+        builder: (context) => ServicesScreen(
+          selectedIndex: 1, // Pass the selected background index
+          isUserLoggedIn: user != null, // Check if user is logged in
+        ),
+      ),
+    );
   }
 
   @override

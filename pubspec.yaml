@@ -1,4 +1,4 @@
-name: auto_shop_app
+name: saber_auto_shop
 description: A simple auto shop app.
 
 publish_to: 'none' # Remove this line if you want to publish to pub.dev
@@ -16,6 +16,10 @@ dependencies:
   flutter_svg: ^2.0.17
 
   google_sign_in: ^6.2.2
+
+  dependency_validator: ^5.0.2
+  intl: ^0.20.2
+
   
 
 
@@ -26,11 +30,20 @@ dev_dependencies:
   flutter_lints: ^5.0.0
 
   flutter_launcher_icons: ^0.14.3
+  flutter_native_splash: ^2.0.3
 
 flutter_icons:
   android: true
   ios: true
   image_path: "assets/images/saber.png"
+
+
+flutter_native_splash:
+  color: "#ffffff" # Choose your background color for the splash screen.
+  image: "assets/images/saber.png" # Path to your splash screen image (should be a square image)
+  android: true
+  ios: true
+
 
 
 flutter:

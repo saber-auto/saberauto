@@ -63,6 +63,7 @@ class HomeScreen extends StatelessWidget {
                     MaterialPageRoute(
                         builder: (context) => ServicesScreen(
                               selectedIndex: 2,
+                              isUserLoggedIn: true,
                             )),
                   );
                 },
@@ -105,6 +106,7 @@ class HomeScreen extends StatelessWidget {
                     MaterialPageRoute(
                         builder: (context) => ServicesScreen(
                               selectedIndex: 2,
+                              isUserLoggedIn: true,
                             )),
                   );
                 },

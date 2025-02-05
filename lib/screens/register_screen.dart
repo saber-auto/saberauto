@@ -19,6 +19,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
   bool _obscurePassword = true;
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
+  final _usernameController = TextEditingController();
+  final _dobController = TextEditingController();
 
   Future<void> _register() async {
     setState(() => _isLoading = true);
@@ -52,6 +54,21 @@ class _RegisterScreenState extends State<RegisterScreen> {
       context,
       MaterialPageRoute(builder: (context) => const LoginScreen()),
     );
+  }
+
+  Future<void> _selectDate(BuildContext context) async {
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(1900),
+      lastDate: DateTime.now(),
+    );
+    if (picked != null && picked != DateTime.now()) {
+      setState(() {
+        _dobController.text =
+            "${picked.toLocal()}".split(' ')[0]; // Format as YYYY-MM-DD
+      });
+    }
   }
 
   @override
@@ -138,7 +155,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
         ),
         alignment: Alignment.center,
         child: Container(
-          height: 400,
+          height: 500, // Increased height for new fields
           width: double.infinity,
           margin: const EdgeInsets.symmetric(horizontal: 30),
           decoration: BoxDecoration(
@@ -161,6 +178,26 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         text: "Register",
                         weight: true,
                         size: 30,
+                      ),
+                    ),
+                    const Spacer(),
+                    TextUtil(text: "Username"),
+                    Container(
+                      height: 35,
+                      decoration: const BoxDecoration(
+                        border: Border(bottom: BorderSide(color: Colors.white)),
+                      ),
+                      child: TextFormField(
+                        controller: _usernameController,
+                        style: const TextStyle(color: Colors.white),
+                        decoration: const InputDecoration(
+                          suffixIcon: Icon(
+                            Icons.person,
+                            color: Colors.white,
+                          ),
+                          fillColor: Colors.white,
+                          border: InputBorder.none,
+                        ),
                       ),
                     ),
                     const Spacer(),
@@ -210,6 +247,31 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           ),
                           fillColor: Colors.white,
                           border: InputBorder.none,
+                        ),
+                      ),
+                    ),
+                    const Spacer(),
+                    TextUtil(text: "Date of Birth"),
+                    Container(
+                      height: 35,
+                      decoration: const BoxDecoration(
+                          border:
+                              Border(bottom: BorderSide(color: Colors.white))),
+                      child: GestureDetector(
+                        onTap: () => _selectDate(context),
+                        child: AbsorbPointer(
+                          child: TextFormField(
+                            controller: _dobController,
+                            style: const TextStyle(color: Colors.white),
+                            decoration: const InputDecoration(
+                              suffixIcon: Icon(
+                                Icons.calendar_today,
+                                color: Colors.white,
+                              ),
+                              fillColor: Colors.white,
+                              border: InputBorder.none,
+                            ),
+                          ),
                         ),
                       ),
                     ),
