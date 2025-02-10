@@ -1,14 +1,18 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'screens/services_screen.dart'; // Corrected import for ServicesScreen
+import 'screens/services_screen.dart';
+import 'screens/login_screen.dart'; // Import LoginScreen
+import 'screens/register_screen.dart'; // Import RegisterScreen
 
 void main() async {
-  // Initialize Supabase with your URL and anonKey
+  WidgetsFlutterBinding.ensureInitialized();
+
+  // Initialize Supabase
   await Supabase.initialize(
-    url: 'https://uzlvrfhgagilsbzfkrjs.supabase.co', // Your Supabase URL
+    url: 'https://uzlvrfhgagilsbzfkrjs.supabase.co',
     anonKey:
-        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InV6bHZyZmhnYWdpbHNiemZrcmpzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzgyNjEwMTAsImV4cCI6MjA1MzgzNzAxMH0.bPzLVW-ODm8J9-75ttL5bCODkVQ5kGmbeBATXco2ag8', // Your Supabase anon key
+        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InV6bHZyZmhnYWdpbHNiemZrcmpzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzgyNjEwMTAsImV4cCI6MjA1MzgzNzAxMH0.bPzLVW-ODm8J9-75ttL5bCODkVQ5kGmbeBATXco2ag8',
   );
 
   runApp(const MyApp());
@@ -24,7 +28,15 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const SplashScreen(),
+      // Define routes
+      initialRoute: '/', // Set the initial route to SplashScreen
+      routes: {
+        '/': (context) => const SplashScreen(),
+        '/login': (context) => const LoginScreen(),
+        '/register': (context) => const RegisterScreen(), // Register route
+        '/services': (context) => ServicesScreen(
+            selectedIndex: 1, isUserLoggedIn: true), // ServicesScreen route
+      },
     );
   }
 }
@@ -40,25 +52,20 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    _navigateToServicesScreen();
+    _navigateToNextScreen();
   }
 
-  // Function to navigate to Services screen directly
-  _navigateToServicesScreen() async {
-    await Future.delayed(
-        const Duration(seconds: 3)); // Show splash for 3 seconds
+  // Navigate to Login Screen or Services Screen based on authentication status
+  _navigateToNextScreen() async {
+    await Future.delayed(const Duration(seconds: 3)); // Splash for 3 seconds
     final user = Supabase.instance.client.auth.currentUser;
 
-    // Navigate to ServicesScreen directly, whether user is logged in or not
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(
-        builder: (context) => ServicesScreen(
-          selectedIndex: 1, // Pass the selected background index
-          isUserLoggedIn: user != null, // Check if user is logged in
-        ),
-      ),
-    );
+    // If user is logged in, navigate to ServicesScreen; otherwise, go to LoginScreen
+    if (user != null) {
+      Navigator.pushReplacementNamed(context, '/services');
+    } else {
+      Navigator.pushReplacementNamed(context, '/login');
+    }
   }
 
   @override
@@ -66,8 +73,7 @@ class _SplashScreenState extends State<SplashScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       body: Center(
-        child:
-            Image.asset('assets/images/saber.png'), // Display logo from assets
+        child: Image.asset('assets/images/saber.png'), // Splash logo
       ),
     );
   }

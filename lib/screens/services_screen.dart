@@ -1,30 +1,23 @@
+// ignore_for_file: unused_import
+
 import 'package:flutter/material.dart';
-import '../models/service.dart';
-import '../widgets/service_item.dart';
-import '../screens/login_screen.dart';
-import '../screens/service_details_screen.dart'; // Ensure this screen exists
-import '../screens/category_services_screen.dart'; // Create this for categories
+import '../models/car_brand.dart';
+import '../widgets/brand_item.dart';
+import '../screens/brand_details_screen.dart';
+import '../screens/category_services_screen.dart'; // Import the CategoryServicesScreen
 
 class ServicesScreen extends StatelessWidget {
-  final List<Service> services = [
-    Service(
-        id: '1',
-        title: 'Oil Change',
-        description: 'Standard oil change',
-        price: 29.99,
-        imageUrl: 'assets/images/oil_change.jpg'),
-    Service(
-        id: '2',
-        title: 'Tire Rotation',
-        description: 'Rotate all four tires',
-        price: 19.99,
-        imageUrl: 'assets/images/tire_rotation.jpg'),
-    Service(
-        id: '3',
-        title: 'Brake Inspection',
-        description: 'Inspect and adjust brakes',
-        price: 49.99,
-        imageUrl: 'assets/images/brake_inspection.jpg'),
+  final List<CarBrand> carBrands = [
+    CarBrand(id: '1', name: 'Toyota', logoUrl: '/images/toyota.png'),
+    CarBrand(id: '2', name: 'Mercedes-Benz', logoUrl: '/images/mercedes.png'),
+    CarBrand(id: '3', name: 'Ford', logoUrl: '/images/ford.png'),
+    CarBrand(id: '4', name: 'BMW', logoUrl: '/images/bmw.png'),
+    CarBrand(id: '5', name: 'Honda', logoUrl: '/images/honda.png'),
+    CarBrand(id: '6', name: 'Audi', logoUrl: '/images/audi.png'),
+    CarBrand(id: '7', name: 'Chevrolet', logoUrl: '/images/chevrolet.png'),
+    CarBrand(id: '8', name: 'Nissan', logoUrl: '/images/nissan.png'),
+    CarBrand(id: '9', name: 'Hyundai', logoUrl: '/images/hyundai.png'),
+    CarBrand(id: '10', name: 'Volkswagen', logoUrl: '/images/volkswagen.png'),
   ];
 
   final int selectedIndex;
@@ -36,20 +29,25 @@ class ServicesScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Services')),
+      appBar: AppBar(title: const Text('Car Brands')),
       drawer: Drawer(
         child: ListView(
           padding: EdgeInsets.zero,
           children: <Widget>[
-            const DrawerHeader(
-              decoration: BoxDecoration(color: Colors.blue),
+            DrawerHeader(
+              decoration: BoxDecoration(
+                color: Colors.blue,
+              ),
               child: Text(
-                'Car Decoration Services',
-                style: TextStyle(color: Colors.white, fontSize: 24),
+                'Services Menu',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 24,
+                ),
               ),
             ),
             ListTile(
-              title: const Text('Wedding Car Decoration'),
+              title: Text('Wedding Cars'),
               onTap: () {
                 Navigator.push(
                   context,
@@ -61,7 +59,7 @@ class ServicesScreen extends StatelessWidget {
               },
             ),
             ListTile(
-              title: const Text('Luxury Car Decoration'),
+              title: Text('Luxury Cars'),
               onTap: () {
                 Navigator.push(
                   context,
@@ -73,13 +71,37 @@ class ServicesScreen extends StatelessWidget {
               },
             ),
             ListTile(
-              title: const Text('Classic Car Decoration'),
+              title: Text('Classic Cars'),
               onTap: () {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
                     builder: (context) =>
                         CategoryServicesScreen(category: 'Classic Car'),
+                  ),
+                );
+              },
+            ),
+            ListTile(
+              title: Text('Modern Cars'),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) =>
+                        CategoryServicesScreen(category: 'Modern Car'),
+                  ),
+                );
+              },
+            ),
+            ListTile(
+              title: Text('Sport Cars'),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) =>
+                        CategoryServicesScreen(category: 'Sport Car'),
                   ),
                 );
               },
@@ -91,67 +113,50 @@ class ServicesScreen extends StatelessWidget {
         padding: const EdgeInsets.all(8.0),
         child: GridView.builder(
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2, // 2 items per row
+            crossAxisCount: 2,
             crossAxisSpacing: 10.0,
             mainAxisSpacing: 10.0,
-            childAspectRatio: 1, // Makes it square
+            childAspectRatio: 1,
           ),
-          itemCount: services.length,
+          itemCount: carBrands.length,
           itemBuilder: (ctx, index) {
-            return ServiceItem(
-              service: services[index],
+            return GestureDetector(
               onTap: () {
-                if (isUserLoggedIn) {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => ServiceDetailsScreen(
-                        service: services[index],
-                        serviceId: Service,
-                      ),
-                    ),
-                  );
-                } else {
-                  _showLoginPrompt(context);
-                }
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) =>
+                        BrandDetailsScreen(brand: carBrands[index]),
+                  ),
+                );
               },
+              child: Card(
+                color: Colors.blueGrey[100],
+                elevation: 4,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Image.asset(
+                      carBrands[index].logoUrl,
+                      width: 200,
+                      height: 200,
+                      fit: BoxFit.contain,
+                    ),
+                    SizedBox(height: 8),
+                    Text(
+                      carBrands[index].name,
+                      style:
+                          TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+                    ),
+                  ],
+                ),
+              ),
             );
           },
         ),
-      ),
-    );
-  }
-
-  // Show login or register prompt
-  void _showLoginPrompt(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: const Text('Login Required'),
-        content: const Text(
-            'Please log in or create an account to access this service.'),
-        actions: [
-          TextButton(
-            onPressed: () {
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(builder: (context) => const LoginScreen()),
-              );
-            },
-            child: const Text('Log In'),
-          ),
-          TextButton(
-            onPressed: () {
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(
-                    builder: (context) =>
-                        const LoginScreen()), // Replace with register screen if needed
-              );
-            },
-            child: const Text('Create Account'),
-          ),
-        ],
       ),
     );
   }

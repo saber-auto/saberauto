@@ -1,6 +1,7 @@
 {
     "cSpell.words": [
         "allprojects",
+        "audioplayers",
         "googleusercontent",
         "gvkn",
         "Matrícula",
@@ -8,7 +9,8 @@
         "subprojects",
         "supabase",
         "webp",
-        "XVCJ"
+        "XVCJ",
+        "Yaris"
     ],
     "java.compile.nullAnalysis.mode": "automatic",
     "java.configuration.updateBuildConfiguration": "automatic"

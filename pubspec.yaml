@@ -19,6 +19,10 @@ dependencies:
 
   dependency_validator: ^5.0.2
   intl: ^0.20.2
+  flutter_animate: ^4.2.0
+  audioplayers: ^6.1.1
+  provider: ^6.1.2
+
 
   
 
@@ -30,7 +34,7 @@ dev_dependencies:
   flutter_lints: ^5.0.0
 
   flutter_launcher_icons: ^0.14.3
-  flutter_native_splash: ^2.0.3
+
 
 flutter_icons:
   android: true
@@ -38,15 +42,12 @@ flutter_icons:
   image_path: "assets/images/saber.png"
 
 
-flutter_native_splash:
-  color: "#ffffff" # Choose your background color for the splash screen.
-  image: "assets/images/saber.png" # Path to your splash screen image (should be a square image)
-  android: true
-  ios: true
-
 
 
 flutter:
   uses-material-design: true
   assets:
-    - assets/images/
+     
+    - assets/images/saber.png
+    - assets/images/smoke.png
+    - assets/sounds/car_drive.mp3
