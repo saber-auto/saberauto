@@ -48,6 +48,4 @@ flutter:
   uses-material-design: true
   assets:
      
-    - assets/images/saber.png
-    - assets/images/smoke.png
-    - assets/sounds/car_drive.mp3
+    - assets/images/

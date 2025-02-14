@@ -1,9 +1,11 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'screens/services_screen.dart';
 import 'screens/login_screen.dart'; // Import LoginScreen
 import 'screens/register_screen.dart'; // Import RegisterScreen
+import 'providers/cart_provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -15,7 +17,14 @@ void main() async {
         'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InV6bHZyZmhnYWdpbHNiemZrcmpzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzgyNjEwMTAsImV4cCI6MjA1MzgzNzAxMH0.bPzLVW-ODm8J9-75ttL5bCODkVQ5kGmbeBATXco2ag8',
   );
 
-  runApp(const MyApp());
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => CartProvider()),
+      ],
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {

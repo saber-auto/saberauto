@@ -1,6 +1,7 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import '../data/bg_data.dart';
 import '../utils/text_utils.dart';
 import 'login_screen.dart';
 
@@ -12,7 +13,7 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
-  int selectedIndex = 0; // Indice de l'image de fond sélectionnée
+  int selectedIndex = 1;
   bool showOption = false;
   bool _isLoading = false;
   bool _obscurePassword = true;
@@ -20,18 +21,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final _passwordController = TextEditingController();
   final _usernameController = TextEditingController();
   final _dobController = TextEditingController();
-
-  // Liste des images de fond
-  List<String> bgList = [
-    'bg1.jpeg',
-    'bg2.jpeg',
-    'bg3.jpeg',
-    'bg4.webp',
-    'bg5.jpeg',
-    'bg6.jpeg',
-    'bg7.jpg',
-    'bg8.jpeg',
-  ];
 
   Future<void> _register() async {
     setState(() => _isLoading = true);
@@ -65,6 +54,21 @@ class _RegisterScreenState extends State<RegisterScreen> {
       context,
       MaterialPageRoute(builder: (context) => const LoginScreen()),
     );
+  }
+
+  Future<void> _selectDate(BuildContext context) async {
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(1900),
+      lastDate: DateTime.now(),
+    );
+    if (picked != null && picked != DateTime.now()) {
+      setState(() {
+        _dobController.text =
+            "${picked.toLocal()}".split(' ')[0]; // Format as YYYY-MM-DD
+      });
+    }
   }
 
   @override
@@ -131,12 +135,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         padding: const EdgeInsets.all(1),
                         child: CircleAvatar(
                           radius: 30,
-                          backgroundImage: AssetImage(
-                              'assets/images/${bgList[selectedIndex]}'),
+                          backgroundImage:
+                              AssetImage('./images/${bgList[selectedIndex]}'),
                         ),
                       ),
                     ),
-                  ),
+                  )
           ],
         ),
       ),
@@ -145,24 +149,24 @@ class _RegisterScreenState extends State<RegisterScreen> {
         width: double.infinity,
         decoration: BoxDecoration(
           image: DecorationImage(
-            image: AssetImage('assets/images/${bgList[selectedIndex]}'),
-            fit: BoxFit.cover, // Ajuste l'image pour couvrir tout l'écran
+            image: AssetImage('./images/${bgList[selectedIndex]}'),
+            fit: BoxFit.fill,
           ),
         ),
         alignment: Alignment.center,
         child: Container(
-          height: 500, // Taille du conteneur de formulaire
+          height: 500, // Increased height for new fields
           width: double.infinity,
           margin: const EdgeInsets.symmetric(horizontal: 30),
           decoration: BoxDecoration(
             border: Border.all(color: Colors.white),
             borderRadius: BorderRadius.circular(15),
-            color: Colors.black.withOpacity(0.3),
+            color: Colors.black.withOpacity(0.1),
           ),
           child: ClipRRect(
             borderRadius: BorderRadius.circular(20),
             child: BackdropFilter(
-              filter: ImageFilter.blur(sigmaY: 5, sigmaX: 5),
+              filter: ImageFilter.blur(sigmaY: 1, sigmaX: 1),
               child: Padding(
                 padding: const EdgeInsets.all(25),
                 child: Column(
@@ -310,20 +314,5 @@ class _RegisterScreenState extends State<RegisterScreen> {
         ),
       ),
     );
-  }
-
-  Future<void> _selectDate(BuildContext context) async {
-    final DateTime? picked = await showDatePicker(
-      context: context,
-      initialDate: DateTime.now(),
-      firstDate: DateTime(1900),
-      lastDate: DateTime.now(),
-    );
-    if (picked != null && picked != DateTime.now()) {
-      setState(() {
-        _dobController.text =
-            "${picked.toLocal()}".split(' ')[0]; // Format as YYYY-MM-DD
-      });
-    }
   }
 }

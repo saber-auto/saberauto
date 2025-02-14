@@ -26,6 +26,12 @@ class ServicesScreen extends StatelessWidget {
   ServicesScreen(
       {super.key, required this.selectedIndex, required this.isUserLoggedIn});
 
+  void _logout(BuildContext context) {
+    // Implement logout functionality
+    Navigator.of(context)
+        .pushReplacementNamed('/login'); // Redirect to login screen
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -47,49 +53,49 @@ class ServicesScreen extends StatelessWidget {
               ),
             ),
             ListTile(
-              title: Text('Wedding Cars'),
+              title: Text('Bouquets de fleurs'),
               onTap: () {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
                     builder: (context) =>
-                        CategoryServicesScreen(category: 'Wedding Car'),
+                        CategoryServicesScreen(category: 'bouquet'),
                   ),
                 );
               },
             ),
             ListTile(
-              title: Text('Luxury Cars'),
+              title: Text('Papillons'),
               onTap: () {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
                     builder: (context) =>
-                        CategoryServicesScreen(category: 'Luxury Car'),
+                        CategoryServicesScreen(category: 'papillons'),
                   ),
                 );
               },
             ),
             ListTile(
-              title: Text('Classic Cars'),
+              title: Text('Stickers'),
               onTap: () {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
                     builder: (context) =>
-                        CategoryServicesScreen(category: 'Classic Car'),
+                        CategoryServicesScreen(category: 'stickers'),
                   ),
                 );
               },
             ),
             ListTile(
-              title: Text('Modern Cars'),
+              title: Text('Location des voitures'),
               onTap: () {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) =>
-                        CategoryServicesScreen(category: 'Modern Car'),
+                    builder: (context) => CategoryServicesScreen(
+                        category: 'Location des voitures'),
                   ),
                 );
               },
@@ -105,6 +111,12 @@ class ServicesScreen extends StatelessWidget {
                   ),
                 );
               },
+            ),
+            Divider(),
+            ListTile(
+              title: Text('Deconnexion'),
+              leading: Icon(Icons.exit_to_app, color: Colors.red),
+              onTap: () => _logout(context),
             ),
           ],
         ),

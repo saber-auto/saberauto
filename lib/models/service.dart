@@ -1,15 +1,18 @@
 class Service {
-  final String id;
+  final String id; // ID unique du service
   final String title;
   final String description;
-  final double price;
-  final String imageUrl;
+  final List<String> images; // Liste d'images
+  final double prixLocation;
+  final double prixAchat;
 
   Service({
-    required this.id,
+    required this.id, // Ajout de l'ID
     required this.title,
     required this.description,
-    required this.price,
-    this.imageUrl = 'assets/images/saber.png', // ✅ Default image path
-  });
+    required this.images, // Liste d'images obligatoire
+    required this.prixLocation,
+    required this.prixAchat,
+  }) : assert(images.isNotEmpty,
+            "Chaque service doit avoir au moins une image !");
 }

@@ -89,8 +89,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                 padding: const EdgeInsets.all(1),
                                 child: CircleAvatar(
                                   radius: 30,
-                                  backgroundImage: AssetImage(
-                                      'assets/images/${bgList[index]}'),
+                                  backgroundImage:
+                                      AssetImage('./images/${bgList[index]}'),
                                 ),
                               ),
                             ),
@@ -117,13 +117,13 @@ class _LoginScreenState extends State<LoginScreen> {
                       });
                     },
                     child: CircleAvatar(
-                      backgroundColor: Colors.white,
+                      backgroundColor: Colors.transparent,
                       child: Padding(
                         padding: const EdgeInsets.all(1),
                         child: CircleAvatar(
                           radius: 30,
-                          backgroundImage: AssetImage(
-                              'assets/images/${bgList[selectedIndex]}'),
+                          backgroundImage:
+                              AssetImage('./images/${bgList[selectedIndex]}'),
                         ),
                       ),
                     ),
@@ -136,7 +136,7 @@ class _LoginScreenState extends State<LoginScreen> {
         width: double.infinity,
         decoration: BoxDecoration(
           image: DecorationImage(
-            image: AssetImage('assets/images/${bgList[selectedIndex]}'),
+            image: AssetImage('./images/${bgList[selectedIndex]}'),
             fit: BoxFit.fill,
           ),
         ),
@@ -153,7 +153,7 @@ class _LoginScreenState extends State<LoginScreen> {
           child: ClipRRect(
             borderRadius: BorderRadius.circular(20),
             child: BackdropFilter(
-              filter: ImageFilter.blur(sigmaY: 5, sigmaX: 5),
+              filter: ImageFilter.blur(sigmaY: 1, sigmaX: 1),
               child: Padding(
                 padding: const EdgeInsets.all(25),
                 child: Column(
