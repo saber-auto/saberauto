@@ -35,7 +35,7 @@ class ServicesScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Car Brands')),
+      appBar: AppBar(title: const Text('Marque de voitures')),
       drawer: Drawer(
         child: ListView(
           padding: EdgeInsets.zero,
@@ -59,7 +59,7 @@ class ServicesScreen extends StatelessWidget {
                   context,
                   MaterialPageRoute(
                     builder: (context) =>
-                        CategoryServicesScreen(category: 'bouquet'),
+                        CategoryServicesScreen(category: 'bouquets'),
                   ),
                 );
               },

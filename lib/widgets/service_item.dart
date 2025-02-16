@@ -5,15 +5,11 @@ import '../models/service.dart';
 class ServiceItem extends StatelessWidget {
   final Service service;
   final VoidCallback onTap;
-  final VoidCallback onRent;
-  final VoidCallback onBuy;
 
   const ServiceItem({
     super.key,
     required this.service,
     required this.onTap,
-    required this.onRent,
-    required this.onBuy,
   });
 
   String formatPrice(double price) {
@@ -29,8 +25,15 @@ class ServiceItem extends StatelessWidget {
         children: [
           GestureDetector(
             onTap: onTap, // Navigate to details on tap
-            child: Image.asset(service.images[0],
-                height: 300, width: 300, fit: BoxFit.cover),
+            child: Center(
+              child: Image.network(
+                service.images[0], // The first image for the service
+                height: 80, // Adjust the height to make the image smaller
+                width: 80, // Adjust the width to match the height
+                fit: BoxFit
+                    .cover, // Maintain the aspect ratio while covering the area
+              ),
+            ),
           ),
           Padding(
             padding: const EdgeInsets.all(8.0),
@@ -39,18 +42,19 @@ class ServiceItem extends StatelessWidget {
               style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
             ),
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              ElevatedButton(
-                onPressed: onRent,
-                child: Text("Rent (${formatPrice(service.prixLocation)})"),
-              ),
-              ElevatedButton(
-                onPressed: onBuy,
-                child: Text("Buy (${formatPrice(service.prixAchat)})"),
-              ),
-            ],
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8.0),
+            child: Text(
+              service.description,
+              style: TextStyle(fontSize: 14, color: Colors.grey),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(
+              formatPrice(service.prixLocation),
+              style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+            ),
           ),
         ],
       ),
